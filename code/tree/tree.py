@@ -9,6 +9,12 @@ class TreeNode:
         self.right = right
 
 
+class LinkNode:
+    def __init__(self, value, next=None):
+        self.value = value
+        self.next = next
+
+
 class TreeCase(unittest.TestCase):
     def traverse(self, root: TreeNode):
         """二叉树前序遍历"""
@@ -36,3 +42,18 @@ class ListCase(unittest.TestCase):
     def test(self):
         data = [1, 2, 3, 4, 5]
         self.traverse(data)
+
+
+class LinkCase(unittest.TestCase):
+    def traverse(self, head: LinkNode):
+        """倒序打印链表"""
+        if not head:
+            return
+        self.traverse(head.next)
+        logger.info(head.value)
+
+    def test(self):
+        head = LinkNode(1)
+        head.next = LinkNode(2)
+        head.next.next = LinkNode(3)
+        self.traverse(head)
