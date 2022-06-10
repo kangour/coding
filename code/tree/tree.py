@@ -31,6 +31,46 @@ class TreeCase(unittest.TestCase):
         self.traverse(root)
 
 
+class TreeDepthCase(unittest.TestCase):
+    """二叉树深度"""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.depth = 0
+        self.res = 0
+
+    def traverse_depth_preorder(self, root: TreeNode):
+        """先序遍历，计算二叉树最大深度
+        进入递归 +1，退出 -1。没有子节点时，统计一个最大深度"""
+
+        if not root:
+            return
+
+        self.depth += 1
+
+        # 这个 res 的判断，放在 depth++ 与 depth-- 之间的任何位置都行
+        # 它对前中后序的位置不敏感，习惯性放前序位置
+        if root.left is None and root.right is None:
+            self.res = max(self.res, self.depth)
+
+        self.traverse_depth_preorder(root.left)
+        self.traverse_depth_preorder(root.right)
+
+        self.depth -= 1
+
+        return self.res
+
+    def test_depth(self):
+        root = TreeNode(1)
+        root.left = TreeNode(2)
+        root.right = TreeNode(3)
+        root.right.left = TreeNode(4)
+        root.right.right = TreeNode(5)
+
+        res = self.traverse_depth_preorder(root)
+        logger.info(res)
+
+
 class ListCase(unittest.TestCase):
     def traverse(self, data: list, index: int = 0):
         """倒序打印列表"""
