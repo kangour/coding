@@ -62,6 +62,20 @@ class TreeDepthCase(unittest.TestCase):
 
         return self.res
 
+    def traverse_depth_postorder(self, root: TreeNode):
+        """后序遍历，计算二叉树最大深度
+        分别计算左右子树最大深度，取最大值"""
+
+        if not root:
+            return 0
+        depth_left = self.traverse_depth_postorder(root.left)
+        depth_right = self.traverse_depth_postorder(root.right)
+
+        # 计算左右子树最大的深度
+        depth_max = max(depth_left, depth_right) + 1
+
+        return depth_max
+
     def test_depth(self):
         root = TreeNode(1)
         root.left = TreeNode(2)
@@ -70,6 +84,9 @@ class TreeDepthCase(unittest.TestCase):
         root.right.right = TreeNode(5)
 
         res = self.traverse_depth_preorder(root)
+        logger.info(res)
+
+        res = self.traverse_depth_postorder(root)
         logger.info(res)
 
 
