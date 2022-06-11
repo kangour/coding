@@ -16,6 +16,8 @@ class LinkNode:
 
 
 class TreeCase(unittest.TestCase):
+    """二叉树打印"""
+
     def traverse(self, root: TreeNode):
         """二叉树前序遍历"""
         if not root:
@@ -72,6 +74,8 @@ class TreeDepthCase(unittest.TestCase):
 
 
 class ListCase(unittest.TestCase):
+    """列表打印"""
+
     def traverse(self, data: list, index: int = 0):
         """倒序打印列表"""
         if index >= len(data):
@@ -85,6 +89,8 @@ class ListCase(unittest.TestCase):
 
 
 class LinkCase(unittest.TestCase):
+    """链表打印"""
+
     def traverse(self, head: LinkNode):
         """倒序打印链表"""
         if not head:
