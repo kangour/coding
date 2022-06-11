@@ -76,6 +76,20 @@ class TreeDepthCase(unittest.TestCase):
 
         return depth_max
 
+    def traverse_node_count(self, root: TreeNode):
+        """后序遍历，计算二叉树节点总数
+        分别计算左右子树节点总数，求和"""
+
+        if not root:
+            return 0
+        count_left = self.traverse_node_count(root.left)
+        count_right = self.traverse_node_count(root.right)
+
+        # 计算左右子树节点数
+        count = count_left + count_right + 1
+
+        return count
+
     def test_depth(self):
         root = TreeNode(1)
         root.left = TreeNode(2)
@@ -88,6 +102,9 @@ class TreeDepthCase(unittest.TestCase):
 
         res = self.traverse_depth_postorder(root)
         logger.info(res)
+
+        res = self.traverse_node_count(root)
+        logger.info(f"共包含 {res} 个节点")
 
 
 class ListCase(unittest.TestCase):
