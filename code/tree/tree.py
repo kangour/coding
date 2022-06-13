@@ -39,7 +39,7 @@ class TreeDepthCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.depth = 0
-        self.res = 0
+        self.max_depth = 0
 
     def traverse_depth_preorder(self, root: TreeNode):
         """先序遍历，计算二叉树最大深度
@@ -50,17 +50,17 @@ class TreeDepthCase(unittest.TestCase):
 
         self.depth += 1
 
-        # 这个 res 的判断，放在 depth++ 与 depth-- 之间的任何位置都行
+        # 这个 max_depth 的判断，放在 depth++ 与 depth-- 之间的任何位置都行
         # 它对前中后序的位置不敏感，习惯性放前序位置
         if root.left is None and root.right is None:
-            self.res = max(self.res, self.depth)
+            self.max_depth = max(self.max_depth, self.depth)
 
         self.traverse_depth_preorder(root.left)
         self.traverse_depth_preorder(root.right)
 
         self.depth -= 1
 
-        return self.res
+        return self.max_depth
 
     def traverse_depth_postorder(self, root: TreeNode):
         """后序遍历，计算二叉树最大深度
