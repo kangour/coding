@@ -38,9 +38,9 @@ class TreeDepthCase(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.depth = 0
-        self.max_depth = 0
-        self.max_diameter = 0
+        self.depth = 0  # 深度
+        self.max_depth = 0  # 最大深度
+        self.max_diameter = 0  # 最大直径
 
     def traverse_depth_preorder(self, root: TreeNode):
         """先序遍历，计算二叉树最大深度
