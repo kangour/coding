@@ -109,20 +109,22 @@ class TreeDepthCase(unittest.TestCase):
         root = TreeNode(1)
         root.left = TreeNode(2)
         root.right = TreeNode(3)
-        root.right.left = TreeNode(4)
-        root.right.right = TreeNode(5)
+        root.left.left = TreeNode(4)
+        root.left.right = TreeNode(5)
+        root.right.left = TreeNode(6)
+        root.right.right = TreeNode(7)
 
         res = self.traverse_depth_preorder(root)
-        logger.info(res)
+        logger.info(f"前序遍历的深度：{res}")
 
         res = self.traverse_depth_postorder(root)
-        logger.info(res)
+        logger.info(f"后序遍历的深度：{res}")
 
         res = self.traverse_node_count(root)
-        logger.info(f"共包含 {res} 个节点")
+        logger.info(f"包含的节点数：{res}")
 
         res = self.traverse_max_diameter(root)
-        logger.info(f"最大直径 {res}")
+        logger.info(f"最大直径：{res}")
 
 
 class ListCase(unittest.TestCase):
