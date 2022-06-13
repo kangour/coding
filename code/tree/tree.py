@@ -41,6 +41,7 @@ class TreeDepthCase(unittest.TestCase):
         self.depth = 0  # 深度
         self.max_depth = 0  # 最大深度
         self.max_diameter = 0  # 最大直径
+        self.lever_nodes = []  # 记录每一层的节点
 
     def traverse_depth_preorder(self, root: TreeNode):
         """先序遍历，计算二叉树最大深度
@@ -105,6 +106,20 @@ class TreeDepthCase(unittest.TestCase):
 
         return max(depth_left, depth_right) + 1
 
+    def lever_traverse(self, root, depth):
+        """将每一层的节点依照索引值放入一个二维列表"""
+        if not root:
+            return
+
+        if depth == len(self.lever_nodes):
+            self.lever_nodes.append([])
+        self.lever_nodes[depth].append(root.value)
+
+        self.lever_traverse(root.left, depth + 1)
+        self.lever_traverse(root.right, depth + 1)
+
+        return self.lever_nodes
+
     def test_depth(self):
         root = TreeNode(1)
         root.left = TreeNode(2)
@@ -125,6 +140,9 @@ class TreeDepthCase(unittest.TestCase):
 
         res = self.traverse_max_diameter(root)
         logger.info(f"最大直径：{res}")
+
+        res = self.lever_traverse(root, 0)
+        logger.info(f"每一层的节点：{res}")
 
 
 class ListCase(unittest.TestCase):
