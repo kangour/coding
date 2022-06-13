@@ -170,6 +170,29 @@ class TreeBFSCase(unittest.TestCase):
 
         return self.bfs_nodes
 
+    @staticmethod
+    def traverse_while(root):
+        """循环遍历，二叉树广度优先"""
+
+        if not root:
+            return
+
+        nodes = [root]
+        bfs_nodes = []
+
+        while nodes:
+            _nodes = []
+            for node in nodes:
+                if not node:
+                    continue
+                bfs_nodes.append(node.value)
+
+                _nodes.append(node.left)
+                _nodes.append(node.right)
+            nodes = _nodes
+
+        return bfs_nodes
+
     def test_depth(self):
         root = TreeNode(1)
         root.left = TreeNode(2)
@@ -183,6 +206,9 @@ class TreeBFSCase(unittest.TestCase):
 
         res = self.traverse(data)
         logger.info(f"BFS：递归分层遍历二叉树：{res}")
+
+        res = self.traverse_while(root)
+        logger.info(f"BFS：循环分层遍历二叉树：{res}")
 
 
 class ListCase(unittest.TestCase):
