@@ -1,36 +1,6 @@
 import unittest
 from code import logger
-
-
-class TreeNode:
-    def __init__(self, value, left=None, right=None):
-        self.value = value
-        self.left = left
-        self.right = right
-
-
-class LinkNode:
-    def __init__(self, value, next=None):
-        self.value = value
-        self.next = next
-
-
-class TreeCase(unittest.TestCase):
-    """二叉树打印"""
-
-    def traverse(self, root: TreeNode):
-        """二叉树前序遍历"""
-        if not root:
-            return
-        logger.info(root.value)
-        self.traverse(root.left)
-        self.traverse(root.right)
-
-    def test(self):
-        root = TreeNode(1)
-        root.left = TreeNode(2)
-        root.right = TreeNode(3)
-        self.traverse(root)
+from code.tree.schema import TreeNode
 
 
 class TreeDepthCase(unittest.TestCase):
@@ -42,6 +12,14 @@ class TreeDepthCase(unittest.TestCase):
         self.max_depth = 0  # 最大深度
         self.max_diameter = 0  # 最大直径
         self.lever_nodes = []  # 记录每一层的节点
+
+    def traverse(self, root: TreeNode):
+        """先序遍历"""
+        if not root:
+            return
+        logger.info(root.value)
+        self.traverse(root.left)
+        self.traverse(root.right)
 
     def traverse_depth_preorder(self, root: TreeNode):
         """先序遍历，计算二叉树最大深度
@@ -129,6 +107,8 @@ class TreeDepthCase(unittest.TestCase):
         root.right.left = TreeNode(6)
         root.right.right = TreeNode(7)
 
+        self.traverse(root)
+
         res = self.traverse_depth_preorder(root)
         logger.info(f"前序遍历的深度：{res}")
 
@@ -143,101 +123,3 @@ class TreeDepthCase(unittest.TestCase):
 
         res = self.lever_traverse(root, 0)
         logger.info(f"每一层的节点：{res}")
-
-
-class TreeBFSCase(unittest.TestCase):
-    """递归遍历，二叉树广度优先"""
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.bfs_nodes = []
-
-    def traverse(self, nodes: list):
-        if not nodes:
-            return
-
-        sub_nodes = []
-
-        for node in nodes:
-            if not node:
-                continue
-            self.bfs_nodes.append(node.value)
-
-            sub_nodes.append(node.left)
-            sub_nodes.append(node.right)
-
-        self.traverse(sub_nodes)
-
-        return self.bfs_nodes
-
-    @staticmethod
-    def traverse_while(root):
-        """循环遍历，二叉树广度优先"""
-
-        if not root:
-            return
-
-        nodes = [root]
-        bfs_nodes = []
-
-        while nodes:
-            _nodes = []
-            for node in nodes:
-                if not node:
-                    continue
-                bfs_nodes.append(node.value)
-
-                _nodes.append(node.left)
-                _nodes.append(node.right)
-            nodes = _nodes
-
-        return bfs_nodes
-
-    def test_depth(self):
-        root = TreeNode(1)
-        root.left = TreeNode(2)
-        root.right = TreeNode(3)
-        root.left.left = TreeNode(4)
-        root.left.right = TreeNode(5)
-        root.right.left = TreeNode(6)
-        root.right.right = TreeNode(7)
-
-        data = [root]
-
-        res = self.traverse(data)
-        logger.info(f"BFS：递归分层遍历二叉树：{res}")
-
-        res = self.traverse_while(root)
-        logger.info(f"BFS：循环分层遍历二叉树：{res}")
-
-
-class ListCase(unittest.TestCase):
-    """列表打印"""
-
-    def traverse(self, data: list, index: int = 0):
-        """倒序打印列表"""
-        if index >= len(data):
-            return
-        self.traverse(data, index + 1)
-        logger.info(data[index])
-
-    def test(self):
-        data = [1, 2, 3, 4, 5]
-        self.traverse(data)
-
-
-class LinkCase(unittest.TestCase):
-    """链表打印"""
-
-    def traverse(self, head: LinkNode):
-        """倒序打印链表"""
-        if not head:
-            return
-        self.traverse(head.next)
-        logger.info(head.value)
-
-    def test(self):
-        head = LinkNode(1)
-        head.next = LinkNode(2)
-        head.next.next = LinkNode(3)
-        self.traverse(head)
