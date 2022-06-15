@@ -18,6 +18,21 @@ class Fibonacci(unittest.TestCase):
             b, a = a + b, b
         return b
 
+    @staticmethod
+    def fib_dp(n: int):
+        """用 DP 数组存储每一步计算的结果，避免重复计算"""
+        dp = [0] * (n + 1)
+
+        dp[0], dp[1] = 0, 1
+
+        if n in [0, 1]:
+            return n
+
+        for i in range(2, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+
+        return dp[-1]
+
     def test_fib(self):
         res = self.fib(33)
         logger.info(f"Fibonacci：{res}")
@@ -25,3 +40,7 @@ class Fibonacci(unittest.TestCase):
     def test_fib_note(self):
         res = self.fib_note(33)
         logger.info(f"Note Fibonacci：{res}")
+
+    def test_fib_dp(self):
+        res = self.fib_dp(33)
+        logger.info(f"DP Array Fibonacci：{res}")
