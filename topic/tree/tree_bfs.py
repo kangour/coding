@@ -1,6 +1,6 @@
 import unittest
-from code import logger
-from code.tree.schema import TreeNode
+from topic import logger
+from topic.tree.schema import TreeNode
 
 
 class TreeBFSCase(unittest.TestCase):

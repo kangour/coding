@@ -1,6 +1,6 @@
 import unittest
 import sys
-from code import logger
+from topic import logger
 
 
 class Coins(unittest.TestCase):

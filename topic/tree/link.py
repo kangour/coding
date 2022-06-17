@@ -1,6 +1,6 @@
 import unittest
-from code import logger
-from code.tree.schema import LinkNode
+from topic import logger
+from topic.tree.schema import LinkNode
 
 
 class LinkCase(unittest.TestCase):

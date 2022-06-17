@@ -1,5 +1,5 @@
 import unittest
-from code import logger
+from topic import logger
 
 
 class ListCase(unittest.TestCase):
