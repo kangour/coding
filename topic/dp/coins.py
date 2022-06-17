@@ -4,6 +4,13 @@ from topic import logger
 
 
 class Coins(unittest.TestCase):
+    """
+    结题顺序：
+    1。 自上而下的暴力递归
+    2。 自上而下的暴力递归 + 备忘录
+    3。 自下而上的动态规划迭代
+    """
+
     def __init__(self, *args, **kwargs):
         super(Coins, self).__init__(*args, **kwargs)
         self.amount_note = {}
@@ -83,6 +90,27 @@ class Coins(unittest.TestCase):
 
         return res
 
+    @staticmethod
+    def coins_dp(coins, amount):
+        """DP 数组自底向上的迭代计算"""
+        """求解 amount，dp 数组最大索引是 amount，故数组数量是 amount + 1 个"""
+        dp = [sys.maxsize] * (amount + 1)
+        dp[0] = 0
+
+        # 自底向上的找出子问题的可行解，得到每个解的最小数量，最终得到的就是最优解
+        for _amount in range(amount + 1):
+            # 穷举遍历每一个硬币，并对比所有可行解，找出最优解
+            for coin in coins:
+
+                sub_amount = _amount - coin
+                if sub_amount < 0:
+                    continue
+
+                # 子问题的解，在 dp[sub_amount] 当中。
+                dp[_amount] = min(dp[_amount], dp[sub_amount] + 1)
+
+        return dp[amount] if dp[amount] != amount + 1 else -1
+
     def test(self):
         coins = [1, 2, 5]
         amount = 11
@@ -95,4 +123,11 @@ class Coins(unittest.TestCase):
         amount = 100
 
         res = self.coins_note(coins, amount)
+        logger.info(f"最小兑换数量: {res}")
+
+    def test_dp(self):
+        coins = [1, 2, 5]
+        amount = 100
+
+        res = self.coins_dp(coins, amount)
         logger.info(f"最小兑换数量: {res}")
